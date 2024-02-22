@@ -86,4 +86,4 @@ if __name__ == "__main__":
     import os
     port = os.environ.get('PORT', 8000) 
     import uvicorn
-    uvicorn.run("server:app", host="0.0.0.0", port=port, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
