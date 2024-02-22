@@ -82,6 +82,6 @@ async def health_check(request: Request):
     # Renderizar la plantilla con el estado
     return templates.TemplateResponse("health_status.html", {"request": request, "status": status_message})
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn server:app --host 0.0.0.0 --port 8000
+#if __name__ == "__main__":
+#    import uvicorn
+#    uvicorn server:app --host 0.0.0.0 --port 8000
