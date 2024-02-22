@@ -13,7 +13,7 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from pymongo.errors import PyMongoError
 
-#revisar como activar un healthcheck: en el .yml
+##revisar como activar un healthcheck: en el .yml
 
 import socket
 
