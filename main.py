@@ -3,6 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi import HTTPException
 from fastapi.templating import Jinja2Templates
+from fastapi.middleware.cors import CORSMiddleware
 import os
 
 USER_MONGODB = os.getenv("USER_MONGODB")
@@ -28,6 +29,15 @@ class presiones(BaseModel):
     
 
 app = FastAPI()
+
+# Configurar CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permite todas las conexiones
+    allow_credentials=True,
+    allow_methods=["*"],  # Permite todos los métodos HTTP
+    allow_headers=["*"],  # Permite todos los encabezados
+)
 
 # Montar la carpeta de archivos estáticos
 app.mount("/static", StaticFiles(directory="static"), name="static")
