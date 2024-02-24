@@ -66,7 +66,7 @@ async def read_root(request: Request):
 @app.get("/enviar_datos/")
 async def recibir_datos(datetime1: str, pres_alm: float):
     # Convertir datetime1 y datetime2 a objetos datetime si es necesario
-    datetime1 = datetime.strptime(datetime1, "%Y-%m-%d %H:%M:%S")
+    #datetime1 = datetime.strptime(datetime1, "%Y-%m-%d %H:%M:%S")
     
     # Aquí procesarías los datos recibidos como prefieras
     return {"datetime1": datetime1, "pres_alm": pres_alm}
