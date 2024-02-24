@@ -30,6 +30,10 @@ class presiones(BaseModel):
 
 app = FastAPI()
 
+class Datos(BaseModel):
+    datetime1: str
+    pres_alm: int
+
 # Configurar CORS
 app.add_middleware(
     CORSMiddleware,
@@ -63,13 +67,17 @@ async def read_root(request: Request):
     # Retornar el archivo HTML
     return templates.TemplateResponse("index.html", {"request": request})
 
-@app.get("/enviar_datos/")
-async def recibir_datos(datetime1: str, pres_alm: float):
-    # Convertir datetime1 y datetime2 a objetos datetime si es necesario
-    #datetime1 = datetime.strptime(datetime1, "%Y-%m-%d %H:%M:%S")
+@app.post("/enviar_datos/")
+async def recibir_datos(datos: Datos):
+    return {"datetime1": datos.datetime1, "pres_alm": datos.pres_alm}
     
-    # Aquí procesarías los datos recibidos como prefieras
-    return {"datetime1": datetime1, "pres_alm": pres_alm}
+#@app.get("/enviar_datos/")
+#async def recibir_datos(datetime1: str, pres_alm: float):
+#    # Convertir datetime1 y datetime2 a objetos datetime si es necesario
+#    #datetime1 = datetime.strptime(datetime1, "%Y-%m-%d %H:%M:%S")
+#    
+#    # Aquí procesarías los datos recibidos como prefieras
+#    return {"datetime1": datetime1, "pres_alm": pres_alm}
     
 # Endpoint para crear un registro de presiones
 @app.post("/presiones/")
