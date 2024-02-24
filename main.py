@@ -5,6 +5,9 @@ from fastapi import HTTPException
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 import os
+import logging
+import time
+
 
 USER_MONGODB = os.getenv("USER_MONGODB")
 PASS_MONGODB = os.getenv("PASS_MONGODB")
@@ -34,6 +37,12 @@ class Datos(BaseModel):
     datetime1: str
     pres_alm: int
 
+# Configuración del logger
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("uvicorn.info")
+
+from starlette.responses import Response
+
 # Configurar CORS
 app.add_middleware(
     CORSMiddleware,
@@ -61,6 +70,14 @@ except Exception as e:
 
 db = client['myprojectrr2']
 collection = db['preassure_sensors2']
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    logger.info(f"Solicitud: {request.method} {request.url} - Completada en {process_time} segundos")
+    return response
     
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
